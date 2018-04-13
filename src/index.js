@@ -1,3 +1,3 @@
 const Apr = require('./core')
 
-module.exports = Apr
+module.exports = new Apr()

@@ -1,8 +1,7 @@
-const Apr = require('../../src')
+const apr = require('../../src')
 
 describe('环绕', () => {
   test('事件有一个环绕', async () => {
-    const apr = new Apr()
     const res = []
     
     apr.on('save', ctx => {
@@ -17,10 +16,10 @@ describe('环绕', () => {
     })
     await apr.emit('save')
     expect(res).toEqual(['start', 'process', 'end'])
+    apr.reset()
   })
 
   test('事件有多个环绕', async () => {
-    const apr = new Apr()
     const res = []
     
     apr.on('save', ctx => {
@@ -43,10 +42,10 @@ describe('环绕', () => {
     })
     await apr.emit('save')
     expect(res).toEqual(['start', 'start', 'process', 'end', 'end'])
+    apr.reset()
   })
 
   test('环绕有一个环绕', async () => {
-    const apr = new Apr()
     const res = []
     
     apr.on('save', ctx => {
@@ -67,10 +66,10 @@ describe('环绕', () => {
     })
     await apr.emit('save')
     expect(res).toEqual(['start', 'a start', 'process', 'a end', 'end'])
+    apr.reset()
   })
 
   test('环绕有多个环绕', async () => {
-    const apr = new Apr()
     const res = []
     
     apr.on('save', ctx => {
@@ -99,10 +98,10 @@ describe('环绕', () => {
     })
     await apr.emit('save')
     expect(res).toEqual(['start', 'start', 'a start', 'process', 'a end', 'end', 'end'])
+    apr.reset()
   })
 
   test('单个全局环绕', async () => {
-    const apr = new Apr()
     const res = []
     apr.on('save', ctx => {
       res.push('save')
@@ -120,10 +119,10 @@ describe('环绕', () => {
     await apr.emit('save')
     await apr.emit('done')
     expect(res).toEqual(['start *', 'save', 'end *', 'start *', 'done', 'end *'])
+    apr.reset()
   })
 
   test('多个全局环绕', async () => {
-    const apr = new Apr()
     const res = []
     apr.on('save', ctx => {
       res.push('save')
@@ -143,10 +142,10 @@ describe('环绕', () => {
 
     await apr.emit('save')
     expect(res).toEqual(['start *', 'start *', 'save', 'end *', 'end *'])
+    apr.reset()
   })
 
   test('全局环绕与具体环绕', async () => {
-    const apr = new Apr()
     const res = []
     apr.on('save', function saveA(ctx) {
       res.push('save')
@@ -166,5 +165,6 @@ describe('环绕', () => {
 
     await apr.emit('save')
     expect(res).toEqual(['start *', 'start *', 'save', 'end *', 'end *'])
+    apr.reset()
   })
 })

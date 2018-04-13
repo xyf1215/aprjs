@@ -59,6 +59,13 @@ class Apr {
       }
     })
   }
+
+  reset() {
+    this.events = Object.create(null)
+    this.globalArounds = []
+    this.hasAppendAround = false
+    this.middlewares = []
+  }
 }
 
 module.exports = Apr
