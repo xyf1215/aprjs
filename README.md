@@ -147,7 +147,7 @@ public class Aspect {
 
 ​	并且around还能再次around，所以我们理一下，在进入之前到达around，然后around手动调用目标程序，目标程序结束后再回到around，**around before -> 目标程序 -> around after**，你可以已经发现什么了，没错和洋葱模型是一样的。
 
-![](http://xyf-resources.oss-cn-beijing.aliyuncs.com/18-4-16/98345827.jpg)
+![洋葱模型](http://xyf-resources.oss-cn-beijing.aliyuncs.com/18-4-16/98345827.jpg)
 
 ​	和洋葱模型不同的是，洋葱的层次一层包着一层，如果在一个层次中进行多个并发（异步）任务的话，在洋葱需要我们手写代码去实现。所以引入了类似Java中的future概念，即：当一个方法有多个环绕时，需要等到多个环绕同事next之后再将执行权传递给下个联调中的方法。
 
@@ -192,7 +192,7 @@ apr.on('save', function saveTags(ctx) {
 
 ​	再重新review以上代码，发现我们已经通过程序就已经能描述出整个程序的事件流了：
 
-![](http://xyf-resources.oss-cn-beijing.aliyuncs.com/18-4-16/76648498.jpg)
+![调用链](http://xyf-resources.oss-cn-beijing.aliyuncs.com/18-4-16/76648498.jpg)
 
 
 
