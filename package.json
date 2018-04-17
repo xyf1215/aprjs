@@ -15,9 +15,6 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "lodash": "^4.17.5"
-  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",

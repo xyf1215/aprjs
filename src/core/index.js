@@ -1,4 +1,4 @@
-const isFunction = require('lodash/isFunction')
+const lang = require('../util/lang')
 const Event = require('./event')
 const Around = require('./entity/around')
 const Context = require('./entity/context')
@@ -8,11 +8,10 @@ class Apr {
     this.events = Object.create(null)
     this.globalArounds = []
     this.hasAppendAround = false
-    this.middlewares = []
   }
 
   on(name, conf, fn) {
-    if (isFunction(conf)) {
+    if (lang.isFunc(conf)) {
       fn = conf
       conf = {}
     }
@@ -21,7 +20,7 @@ class Apr {
   }
 
   around(packName, conf, fn) {
-    if (isFunction(conf)) {
+    if (lang.isFunc(conf)) {
       fn = conf
       conf = {}
     }

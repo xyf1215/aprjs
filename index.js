@@ -1,9 +1,6 @@
-const Apr = require('./src')
-const apr = new Apr()
-const st = setTimeout
+const apr = require('./src')
 
-st(async () => {
-
+setTimeout(async () => {
   apr.on('save', ctx => {
     console.log('save')
   })

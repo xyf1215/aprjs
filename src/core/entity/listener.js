@@ -1,6 +1,9 @@
+const env = require('../../util/env')
+
 class Listener {
   constructor(conf, fn) {
     this.name = fn.name || Symbol('Anonymous')
+    this.inBrowser = env.inBrowser
     this.fn = fn
     this.aroundCache = null
   }

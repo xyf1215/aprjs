@@ -1,6 +1,9 @@
+const env = require('../../util/env')
+
 class Around {
   constructor(conf, fn, depend = '*') {
     this.name = fn.name || Symbol('Anonymous')
+    this.inBrowser = env.inBrowser
     this.fn = fn
     this.depend = depend
   }
