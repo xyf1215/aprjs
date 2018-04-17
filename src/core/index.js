@@ -68,4 +68,4 @@ class Apr {
   }
 }
 
-module.exports = Apr
+module.exports = new Apr()

@@ -1,8 +1,7 @@
-const Apr = require('../../src')
+const apr = require('../../src')
 
 describe('初始化', () => {
   test('框架结构', () => {
-    const apr = new Apr()
     expect(apr).toHaveProperty('events')
     expect(apr).toHaveProperty('on')
     expect(apr).toHaveProperty('emit')
@@ -10,10 +9,17 @@ describe('初始化', () => {
   })
 
   test('实例化', () => {
-    const apr = new Apr()
-    apr.on('save', () => {})
+    apr.on('init.instance', () => {})
     apr.around('*', ctx => {})
     expect(Object.keys(apr.events).length).toBe(1)
     expect(Object.keys(apr.globalArounds).length).toBe(1)
+  })
+
+  test('重置', () => {
+    apr.reset()
+    apr.on('init.reset', () => {})
+    expect(Object.keys(apr.events).length).toBe(1)
+    apr.reset()
+    expect(Object.keys(apr.events).length).toBe(0)
   })
 })

@@ -1,59 +1,53 @@
-const Apr = require('../../src')
+const apr = require('../../src')
 
 describe('事件回调', () => {
   test('单个事件', async () => {
-    const apr = new Apr()
     let done = false
-    apr.on('save', {connect: true}, async () => {
+    apr.on('event.single', {connect: true}, async () => {
       done = true
     })
-    await apr.emit('save')
+    await apr.emit('event.single')
     expect(done).toBe(true)
   })
 
   test('多个事件', async () => {
-    const apr = new Apr()
     let count = 0
-    
-    apr.on('save', ctx => {
+    apr.on('event.multi', ctx => {
       count ++
     })
-    apr.on('save', ctx => {
+    apr.on('event.multi', ctx => {
       count ++
     })
-    await apr.emit('save')
+    await apr.emit('event.multi')
     expect(count).toBe(2)
   })
 
   test('事件中触发其他事件', async () => {
-    const apr = new Apr()
     let count = 0
+    apr.on('event.other1', ctx => {
+      count ++
+    })
+
+    apr.on('event.other1', ctx => {
+      count ++
+    })
+
+    apr.on('event.other2', ctx => {
+      count ++
+    })
+
+    apr.on('event.other', async ctx => {
+      await apr.emit('event.other1')
+      await apr.emit('event.other2')
+      count ++
+    })
     
-    apr.on('done', ctx => {
-      count ++
-    })
-
-    apr.on('done', ctx => {
-      count ++
-    })
-
-    apr.on('done1', ctx => {
-      count ++
-    })
-
-    apr.on('save', async ctx => {
-      await apr.emit('done')
-      await apr.emit('done1')
-      count ++
-    })
-    
-    await apr.emit('save')
+    await apr.emit('event.other')
     expect(count).toBe(4)
   })
 
   test('异步事件', async () => {
-    const apr = new Apr()
-    apr.on('save', ctx => {
+    apr.on('event.async', ctx => {
       return new Promise(resolve => {
         setTimeout(() => {
           ctx.resp.res = 1
@@ -61,32 +55,30 @@ describe('事件回调', () => {
         }, 200)
       })
     })
-    const ctx = await apr.emit('save')
+    const ctx = await apr.emit('event.async')
     expect(ctx.resp.res).toBe(1)
   })
 })
 
 describe('事件返回值', () => {
   test('单个事件返回值', async () => {
-    const apr = new Apr()
-    apr.on('save', ctx => {
+    apr.on('event.result', ctx => {
       ctx.resp.s1 = ctx.req.num + 1
     })
-    const ctx = await apr.emit('save', {
+    const ctx = await apr.emit('event.result', {
       num: 1
     })
     expect(ctx.resp.s1).toBe(2)
   })
 
   test('多个事件返回值', async () => {
-    const apr = new Apr()
-    apr.on('save', ctx => {
+    apr.on('event.result.multi', ctx => {
       ctx.resp.s1 = ctx.req.num + 1
     })
-    apr.on('save', ctx => {
+    apr.on('event.result.multi', ctx => {
       ctx.resp.s2 = ctx.req.num + 2
     })
-    const ctx = await apr.emit('save', {
+    const ctx = await apr.emit('event.result.multi', {
       num: 1
     })
     expect(ctx.resp.s1).toBe(2)

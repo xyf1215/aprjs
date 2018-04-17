@@ -31,7 +31,7 @@ function async savePost(form) {
 // js
 function async replaceWords(body) {
   const words = await ajax('/word/list')
-  words.forEach(word => body.replace(word, '*'))
+  words.forEach(word => body = body.replace(word, '*'))
   return body
 }
 
@@ -198,7 +198,7 @@ apr.on('save', function saveTags(ctx) {
 
 我们可以有序的组织调用链条，这些链条可以帮助我们理解程序执行的工程，并且稍加封装，我们可以将程序的每一步入参、出参都进行记录，方便后续调试。
 
-甚至更进一步，我们可以将当前的状态进行序列号存储，然后通过序列号数据还原当时的场景。
+甚至更进一步，我们可以将当前的状态进行序列号存储，然后通过序列化数据还原当时的场景。
 
 ### 中间件
 
