@@ -58,12 +58,19 @@ class Apr {
       }
     })
   }
-
+  
   reset() {
     this.events = Object.create(null)
     this.globalArounds = []
     this.hasAppendAround = false
-    this.middlewares = []
+  }
+
+  serialize() {
+
+  }
+
+  deserialize(state) {
+    
   }
 }
 
